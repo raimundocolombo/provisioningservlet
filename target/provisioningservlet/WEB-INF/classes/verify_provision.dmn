@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="verifyDbProvision" name="Verify DB Provision" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.10.0">
+  <decision id="verifyDbProvisionId" name="Verify DB Provision">
+    <decisionTable id="DecisionTable_008wf4q" hitPolicy="FIRST">
+      <input id="Input_1" label="Vendor" camunda:inputVariable="vendor">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>vendor</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0j90b76">
+          <text>"postgres"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_05yoalg" label="Size" camunda:inputVariable="size">
+        <inputExpression id="LiteralExpression_0t9oosy" typeRef="long">
+          <text>size</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="provision" typeRef="boolean" />
+      <rule id="DecisionRule_004yt7l">
+        <description>The provision is valid if the vendor is postgres and the db size is less than 1Tb.</description>
+        <inputEntry id="UnaryTests_0p1wq1d">
+          <text>"postgres"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00jgmlw">
+          <text>&lt; 8000000000000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0irh0cw">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00oktut">
+        <description>Provision not valid.</description>
+        <inputEntry id="UnaryTests_09hfao5">
+          <text>not("postgres")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_044iuus">
+          <text>&lt; 8000000000000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fyz3iw">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_08q27wf">
+        <description>Provision not valid.</description>
+        <inputEntry id="UnaryTests_1na34x8">
+          <text>"postgres"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03a0mo5">
+          <text>&gt;= 8000000000000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xpesq7">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="verifyDbProvisionId">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
